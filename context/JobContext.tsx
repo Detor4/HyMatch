@@ -131,10 +131,37 @@ export function JobProvider({ children }: { children: ReactNode }) {
   };
 
   const filterJobs = (filters: any) => {
+    console.log('Filtering available jobs with:', filters);
     let filteredJobs = [...mockJobs];
 
-    // Sort by selected option
-    if (filters.sort) {
+    // Apply sorting first (even if no other filters)
+    if (filters.sortBy && filters.sortOrder) {
+      console.log('Applying sort to available jobs:', filters.sortBy, filters.sortOrder);
+      switch (filters.sortBy) {
+        case 'salary':
+          if (filters.sortOrder === 'asc') {
+            filteredJobs.sort((a, b) => {
+              const aValue = a.hourlyWage.max;
+              const bValue = b.hourlyWage.max;
+              return aValue - bValue; // Lower salary first (ascending)
+            });
+          } else if (filters.sortOrder === 'desc') {
+            filteredJobs.sort((a, b) => {
+              const aValue = a.hourlyWage.max;
+              const bValue = b.hourlyWage.max;
+              return bValue - aValue; // Higher salary first (descending)
+            });
+          }
+          break;
+        case 'commuteHome':
+        case 'commuteSchool':
+          filteredJobs.sort((a, b) => a.commuteTime - b.commuteTime);
+          break;
+      }
+    }
+
+    // Legacy sort support
+    if (filters.sort && !filters.sortBy) {
       switch (filters.sort) {
         case 'salary':
           if (filters.salaryTypes && filters.salaryTypes.length > 0) {
@@ -212,30 +239,28 @@ export function JobProvider({ children }: { children: ReactNode }) {
 
   const filterSelectedJobs = (filters: any) => {
     console.log('Filtering selected jobs with:', filters);
+    console.log('Selected jobs before sorting:', selectedJobs.map(job => ({ id: job.id, title: job.title, salary: job.hourlyWage.max })));
     
-    // If no filters are applied, clear filtered results
-    if (!filters || !filters.filters || filters.filters.length === 0) {
-      setFilteredSelectedJobs([]);
-      return;
-    }
-
     let filteredJobs = [...selectedJobs];
 
-    // Apply sorting
-    if (filters.sortBy) {
+    // Apply sorting first (even if no other filters)
+    if (filters.sortBy && filters.sortOrder) {
+      console.log('Applying sort:', filters.sortBy, filters.sortOrder);
       switch (filters.sortBy) {
-        case 'hourlyWage':
+        case 'salary':
           if (filters.sortOrder === 'asc') {
             filteredJobs.sort((a, b) => {
               const aValue = a.hourlyWage.max;
               const bValue = b.hourlyWage.max;
-              return aValue - bValue; // Lower salary first
+              console.log('Sorting asc:', aValue, 'vs', bValue);
+              return aValue - bValue; // Lower salary first (ascending)
             });
-          } else {
+          } else if (filters.sortOrder === 'desc') {
             filteredJobs.sort((a, b) => {
               const aValue = a.hourlyWage.max;
               const bValue = b.hourlyWage.max;
-              return bValue - aValue; // Higher salary first
+              console.log('Sorting desc:', aValue, 'vs', bValue);
+              return bValue - aValue; // Higher salary first (descending)
             });
           }
           break;
@@ -244,6 +269,13 @@ export function JobProvider({ children }: { children: ReactNode }) {
           filteredJobs.sort((a, b) => a.commuteTime - b.commuteTime);
           break;
       }
+      console.log('Jobs after sorting:', filteredJobs.map(job => ({ id: job.id, title: job.title, salary: job.hourlyWage.max })));
+    }
+
+    // If no other filters are applied, just apply sorting
+    if (!filters || !filters.filters || filters.filters.length === 0) {
+      setFilteredSelectedJobs(filteredJobs);
+      return;
     }
 
     // Apply filters

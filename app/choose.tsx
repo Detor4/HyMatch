@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, SafeAreaView, Image } from 'react-native';
-import { Heart, ArrowLeft } from 'lucide-react-native';
+import { Heart, ArrowLeft, Filter } from 'lucide-react-native';
 import { useJobs } from '@/context/JobContext';
 import { useLanguage } from '@/context/LanguageContext';
 import JobListItem from '@/components/JobListItem';
@@ -33,7 +33,7 @@ export default function ChooseScreen() {
          </TouchableOpacity>
                  <Text style={styles.headerTitle}>{t('chooseList')}</Text>
         <TouchableOpacity style={styles.filterButton} onPress={() => setShowFilter(true)}>
-          <Image source={require('@/components/filter.png')} style={styles.headerIcon} />
+          <Filter size={36} color="#000000" />
         </TouchableOpacity>
                </View>
 

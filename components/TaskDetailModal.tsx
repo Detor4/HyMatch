@@ -6,8 +6,11 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  Dimensions,
 } from 'react-native';
 import { X } from 'lucide-react-native';
+
+const { height: screenHeight } = Dimensions.get('window');
 
 interface TaskDetailModalProps {
   visible: boolean;
@@ -37,7 +40,7 @@ export default function TaskDetailModal({ visible, onClose, taskName }: TaskDeta
           </View>
 
           {/* Content */}
-          <View style={styles.content}>
+          <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
             <Text style={styles.sectionTitle}>作業内容</Text>
             <Text style={styles.description}>
               商品の仕分け作業を行います。入荷した商品を種類別に分類し、適切な場所に配置する作業です。
@@ -68,7 +71,7 @@ export default function TaskDetailModal({ visible, onClose, taskName }: TaskDeta
               戸田公園駅から徒歩10分{'\n'}
               清潔で安全な作業環境
             </Text>
-          </View>
+          </ScrollView>
         </View>
       </View>
     </Modal>
@@ -81,13 +84,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     justifyContent: 'center',
     alignItems: 'center',
+    paddingHorizontal: 20,
   },
   modalContainer: {
-    width: '85%',
-    maxHeight: '80%',
+    width: '100%',
+    maxHeight: screenHeight * 0.8,
     backgroundColor: '#eceae6',
     borderRadius: 16,
-    padding: 20,
     elevation: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
@@ -98,7 +101,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 20,
+    padding: 20,
     paddingBottom: 15,
     borderBottomWidth: 1,
     borderBottomColor: '#D8A362',
@@ -126,7 +129,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   content: {
-    flex: 1,
+    padding: 20,
+    paddingTop: 0,
   },
   sectionTitle: {
     fontSize: 16,

@@ -252,18 +252,6 @@ const translations = {
     tel: 'Tel',
     
     // Favorites
-    favorites: 'Sevimli ishlar',
-    favoritesScreen: 'Sevimli ishlar ekrani',
-    noFunctionality: 'Funksionallik yo\'q',
-    
-    // Search
-    search: 'Qidirish',
-    searchJobs: 'Ishlarni qidirish',
-    searchPlaceholder: 'Ishlarni qidirish...',
-    noJobsFound: 'Ish topilmadi',
-    tryDifferentSearch: 'Boshqa qidiruvni sinab ko\'ring',
-    
-    // Favorites
     favorites: 'Favorites',
     favoritesScreen: 'Favorites Screen',
     noFunctionality: 'No functionality',
@@ -390,6 +378,17 @@ const translations = {
     backToJobList: 'Ishlar ro\'yxatiga qayting',
     tel: 'Tel',
     
+    // Favorites
+    favorites: 'Sevimli ishlar',
+    favoritesScreen: 'Sevimli ishlar ekrani',
+    noFunctionality: 'Funksionallik yo\'q',
+    
+    // Search
+    search: 'Qidirish',
+    searchJobs: 'Ishlarni qidirish',
+    searchPlaceholder: 'Ishlarni qidirish...',
+    noJobsFound: 'Ish topilmadi',
+    tryDifferentSearch: 'Boshqa qidiruvni sinab ko\'ring',
 
   },
 };

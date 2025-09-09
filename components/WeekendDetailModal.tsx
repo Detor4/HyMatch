@@ -5,8 +5,12 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
+  ScrollView,
+  Dimensions,
 } from 'react-native';
 import { X } from 'lucide-react-native';
+
+const { height: screenHeight } = Dimensions.get('window');
 
 interface WeekendDetailModalProps {
   visible: boolean;
@@ -35,65 +39,56 @@ export default function WeekendDetailModal({ visible, onClose }: WeekendDetailMo
           </View>
 
           {/* Content */}
-          <View style={styles.content}>
-            <Text style={styles.sectionTitle}>勤務日について</Text>
+          <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+            <Text style={styles.sectionTitle}>勤務スケジュール</Text>
             <Text style={styles.description}>
-              この仕事は月曜日から金曜日までが通常の勤務日です。土曜日と日曜日は休日となります。
+              月曜日〜金曜日：9:00〜18:00{'\n'}
+              土曜日：9:00〜17:00（隔週）{'\n'}
+              日曜日：休み{'\n'}
+              祝日：休み
             </Text>
             
             <Text style={styles.sectionTitle}>勤務時間</Text>
             <Text style={styles.description}>
-              • 開始時間：09:00{'\n'}
-              • 終了時間：18:00{'\n'}
-              • 勤務時間：8時間{'\n'}
-              • 休憩時間：1時間（昼食時間）
+              • 基本勤務時間：8時間/日{'\n'}
+              • 休憩時間：1時間（12:00〜13:00）{'\n'}
+              • 残業：必要に応じて{'\n'}
+              • フレックスタイム制度あり
             </Text>
             
-            <Text style={styles.sectionTitle}>勤務日の詳細</Text>
+            <Text style={styles.sectionTitle}>休日・休暇</Text>
             <Text style={styles.description}>
-              • 月曜日（MON）：通常勤務{'\n'}
-              • 火曜日（TUE）：通常勤務{'\n'}
-              • 水曜日（WED）：通常勤務{'\n'}
-              • 木曜日（THU）：通常勤務{'\n'}
-              • 金曜日（FRI）：通常勤務{'\n'}
-              • 土曜日（SAT）：休日{'\n'}
-              • 日曜日（SUN）：休日
-            </Text>
-            
-            <Text style={styles.sectionTitle}>残業について</Text>
-            <Text style={styles.description}>
-              • 残業時間：月20時間まで{'\n'}
-              • 残業手当：時給の1.25倍{'\n'}
-              • 深夜残業：22:00以降は1.5倍{'\n'}
-              • 休日出勤：時給の1.35倍
-            </Text>
-            
-            <Text style={styles.sectionTitle}>休暇制度</Text>
-            <Text style={styles.description}>
-              • 有給休暇：入社後6ヶ月で10日付与{'\n'}
+              • 週休2日制（土日）{'\n'}
+              • 祝日休み{'\n'}
+              • 有給休暇：年10日付与{'\n'}
               • 夏季休暇：3日間{'\n'}
-              • 年末年始休暇：5日間{'\n'}
-              • 特別休暇：結婚・出産・葬儀など
+              • 年末年始休暇：5日間
             </Text>
             
-            <Text style={styles.sectionTitle}>勤務形態</Text>
+            <Text style={styles.sectionTitle}>シフト制</Text>
             <Text style={styles.description}>
-              • フルタイム勤務{'\n'}
-              • 正社員としての雇用{'\n'}
-              • 社会保険完備{'\n'}
-              • 交通費支給{'\n'}
-              • 各種手当あり
+              • 早番：7:00〜16:00{'\n'}
+              • 遅番：10:00〜19:00{'\n'}
+              • 夜勤：22:00〜7:00（夜勤手当あり）{'\n'}
+              • シフトは月1回希望調査
+            </Text>
+            
+            <Text style={styles.sectionTitle}>勤務の特徴</Text>
+            <Text style={styles.description}>
+              • フレックスタイム制度{'\n'}
+              • 残業手当支給{'\n'}
+              • 休日出勤手当{'\n'}
+              • 勤務時間の調整可能
             </Text>
             
             <Text style={styles.sectionTitle}>勤務時の注意点</Text>
             <Text style={styles.description}>
-              • 定時に出勤する{'\n'}
-              • 勤務時間を正確に記録する{'\n'}
-              • 休憩時間を適切に取る{'\n'}
-              • 体調管理を心がける{'\n'}
-              • 上司に事前に連絡する
+              • 定時出勤の徹底{'\n'}
+              • 休憩時間の遵守{'\n'}
+              • 残業申請の事前提出{'\n'}
+              • 体調管理の重要性
             </Text>
-          </View>
+          </ScrollView>
         </View>
       </View>
     </Modal>
@@ -106,13 +101,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     justifyContent: 'center',
     alignItems: 'center',
+    paddingHorizontal: 20,
   },
   modalContainer: {
-    width: '85%',
-    maxHeight: '80%',
+    width: '100%',
+    maxHeight: screenHeight * 0.8,
     backgroundColor: '#eceae6',
     borderRadius: 16,
-    padding: 20,
     elevation: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
@@ -123,7 +118,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 20,
+    padding: 20,
     paddingBottom: 15,
     borderBottomWidth: 1,
     borderBottomColor: '#D8A362',
@@ -151,7 +146,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   content: {
-    flex: 1,
+    padding: 20,
+    paddingTop: 0,
   },
   sectionTitle: {
     fontSize: 16,

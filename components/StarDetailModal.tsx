@@ -5,8 +5,12 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
+  ScrollView,
+  Dimensions,
 } from 'react-native';
 import { X } from 'lucide-react-native';
+
+const { height: screenHeight } = Dimensions.get('window');
 
 interface StarDetailModalProps {
   visible: boolean;
@@ -35,75 +39,55 @@ export default function StarDetailModal({ visible, onClose }: StarDetailModalPro
           </View>
 
           {/* Content */}
-          <View style={styles.content}>
-            <Text style={styles.sectionTitle}>福利厚生について</Text>
+          <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+            <Text style={styles.sectionTitle}>職場環境</Text>
             <Text style={styles.description}>
-              この職場では従業員の働きやすさを重視し、様々な福利厚生制度を提供しています。
+              清潔で安全な作業環境{'\n'}
+              空調完備・照明良好{'\n'}
+              休憩スペース完備{'\n'}
+              更衣室・シャワー室あり
             </Text>
             
-            <Text style={styles.sectionTitle}>給与・手当</Text>
+            <Text style={styles.sectionTitle}>福利厚生</Text>
             <Text style={styles.description}>
-              • 基本給：経験・能力に応じて決定{'\n'}
-              • 残業手当：時給の1.25倍{'\n'}
-              • 深夜手当：22:00以降は1.5倍{'\n'}
-              • 休日出勤手当：時給の1.35倍{'\n'}
-              • 通勤手当：月額最大¥30,000まで
+              • 社会保険完備（健康保険・厚生年金）{'\n'}
+              • 雇用保険加入{'\n'}
+              • 労災保険適用{'\n'}
+              • 交通費支給（月額最大¥15,000）
             </Text>
             
-            <Text style={styles.sectionTitle}>社会保険・年金</Text>
+            <Text style={styles.sectionTitle}>手当・給与</Text>
             <Text style={styles.description}>
-              • 健康保険：会社負担50%{'\n'}
-              • 厚生年金：会社負担50%{'\n'}
-              • 雇用保険：完全加入{'\n'}
-              • 労災保険：業務中の事故をカバー{'\n'}
-              • 介護保険：40歳以上対象
+              • 残業手当（時給の1.25倍）{'\n'}
+              • 夜勤手当（時給の1.3倍）{'\n'}
+              • 休日出勤手当（時給の1.35倍）{'\n'}
+              • 食事手当（勤務時間8時間以上）
             </Text>
             
             <Text style={styles.sectionTitle}>休暇制度</Text>
             <Text style={styles.description}>
-              • 有給休暇：入社後6ヶ月で10日付与{'\n'}
+              • 有給休暇：年10日付与{'\n'}
               • 夏季休暇：3日間{'\n'}
               • 年末年始休暇：5日間{'\n'}
-              • 特別休暇：結婚・出産・葬儀など{'\n'}
-              • リフレッシュ休暇：3年勤続で5日間
-            </Text>
-            
-            <Text style={styles.sectionTitle}>職場環境</Text>
-              <Text style={styles.description}>
-              • 冷暖房完備の快適なオフィス{'\n'}
-              • 清潔な休憩室と食堂{'\n'}
-              • 無料のコーヒー・お茶サービス{'\n'}
-              • 駐車場・駐輪場完備{'\n'}
-              • シャワー室・更衣室あり
+              • 特別休暇（結婚・出産・葬儀）
             </Text>
             
             <Text style={styles.sectionTitle}>教育・研修</Text>
             <Text style={styles.description}>
-              • 新入社員研修：1ヶ月間{'\n'}
-              • スキルアップ研修：年2回{'\n'}
-              • 語学研修：英語・中国語コース{'\n'}
-              • 資格取得支援：費用の50%負担{'\n'}
-              • オンライン学習プラットフォーム利用可能
+              • 新入社員研修{'\n'}
+              • 安全衛生教育{'\n'}
+              • 日本語学習支援{'\n'}
+              • スキルアップ研修
             </Text>
             
-            <Text style={styles.sectionTitle}>健康管理</Text>
+            <Text style={styles.sectionTitle}>その他のサービス</Text>
             <Text style={styles.description}>
-              • 健康診断：年1回無料{'\n'}
-              • ストレスチェック：年1回実施{'\n'}
-              • 産業保健スタッフ常駐{'\n'}
-              • メンタルヘルス相談窓口{'\n'}
-              • スポーツジム利用料金割引
+              • 制服貸与{'\n'}
+              • 作業靴支給{'\n'}
+              • 安全具支給{'\n'}
+              • 社員寮制度（希望者のみ）
             </Text>
-            
-            <Text style={styles.sectionTitle}>その他の特典</Text>
-            <Text style={styles.description}>
-              • 社員食堂：割引価格で利用{'\n'}
-              • 社員寮：家賃補助あり{'\n'}
-              • 社員旅行：年1回実施{'\n'}
-              • 忘年会・新年会：会社負担{'\n'}
-              • 各種割引サービス利用可能
-            </Text>
-          </View>
+          </ScrollView>
         </View>
       </View>
     </Modal>
@@ -116,13 +100,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     justifyContent: 'center',
     alignItems: 'center',
+    paddingHorizontal: 20,
   },
   modalContainer: {
-    width: '85%',
-    maxHeight: '80%',
+    width: '100%',
+    maxHeight: screenHeight * 0.8,
     backgroundColor: '#eceae6',
     borderRadius: 16,
-    padding: 20,
     elevation: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
@@ -133,7 +117,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 20,
+    padding: 20,
     paddingBottom: 15,
     borderBottomWidth: 1,
     borderBottomColor: '#D8A362',
@@ -161,7 +145,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   content: {
-    flex: 1,
+    padding: 20,
+    paddingTop: 0,
   },
   sectionTitle: {
     fontSize: 16,

@@ -72,10 +72,17 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
     profileData.age &&
     profileData.nationality &&
     profileData.gender &&
+    profileData.commuteTimeHome &&
+    profileData.commuteTimeBuilding &&
     profileData.postalCode &&
     profileData.address &&
     profileData.phone &&
-    profileData.email
+    profileData.email &&
+    profileData.visaType &&
+    profileData.plannedVisaChange &&
+    profileData.japaneseLevel &&
+    profileData.currentStatus &&
+    profileData.workExperience
   );
 
   return (

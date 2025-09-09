@@ -49,6 +49,7 @@ export default function FilterModal({ visible, onClose, onApply }: FilterModalPr
   const [selectedSalaryTypes, setSelectedSalaryTypes] = useState<string[]>([]);
   const [showWorkImportantModal, setShowWorkImportantModal] = useState(false);
   const [selectedWorkImportant, setSelectedWorkImportant] = useState<string[]>([]);
+  const [selectedSortDirection, setSelectedSortDirection] = useState<'asc' | 'desc' | null>(null);
 
   // Get unique job categories from mock data
   const jobCategories = Array.from(new Set(mockJobs.map(job => job.category)));
@@ -138,6 +139,7 @@ export default function FilterModal({ visible, onClose, onApply }: FilterModalPr
   const handleSearch = () => {
     onApply({
       sortBy: selectedSort,
+      sortOrder: selectedSortDirection,
       filters: selectedFilters,
       jobTypes: selectedJobTypes,
       japaneseLevels: selectedJapaneseLevels,
@@ -146,6 +148,25 @@ export default function FilterModal({ visible, onClose, onApply }: FilterModalPr
       workImportant: selectedWorkImportant
     });
     onClose();
+  };
+
+  const handleSortDirection = (direction: 'asc' | 'desc') => {
+    const newDirection = selectedSortDirection === direction ? null : direction;
+    setSelectedSortDirection(newDirection);
+    
+    console.log('Sort direction changed to:', newDirection);
+    
+    // Apply sort immediately
+    onApply({
+      sortBy: 'salary',
+      sortOrder: newDirection,
+      filters: selectedFilters,
+      jobTypes: selectedJobTypes,
+      japaneseLevels: selectedJapaneseLevels,
+      transports: selectedTransports,
+      salaryTypes: selectedSalaryTypes,
+      workImportant: selectedWorkImportant
+    });
   };
 
   const handleClose = () => {
@@ -157,10 +178,12 @@ export default function FilterModal({ visible, onClose, onApply }: FilterModalPr
     setSelectedTransports([]);
     setSelectedSalaryTypes([]);
     setSelectedWorkImportant([]);
+    setSelectedSortDirection(null);
     
     // Apply empty filters to clear filtered results
     onApply({
       sortBy: 'commuteSchool',
+      sortOrder: null,
       filters: [],
       jobTypes: [],
       japaneseLevels: [],
@@ -342,6 +365,28 @@ export default function FilterModal({ visible, onClose, onApply }: FilterModalPr
                     </View>
                   <Text style={styles.optionText}>{option.label}</Text>
                 </View>
+                {option.id === 'salary' && (
+                  <View style={styles.sortButtonsContainer}>
+                    <TouchableOpacity 
+                      style={styles.sortButton}
+                      onPress={() => handleSortDirection('desc')}
+                    >
+                      <View style={[
+                        styles.sortTriangleUp,
+                        selectedSortDirection === 'desc' && styles.sortTriangleSelected
+                      ]} />
+                    </TouchableOpacity>
+                    <TouchableOpacity 
+                      style={styles.sortButton}
+                      onPress={() => handleSortDirection('asc')}
+                    >
+                      <View style={[
+                        styles.sortTriangleDown,
+                        selectedSortDirection === 'asc' && styles.sortTriangleSelected
+                      ]} />
+                    </TouchableOpacity>
+                  </View>
+                )}
               </TouchableOpacity>
             ))}
           </View>
@@ -793,6 +838,47 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     flex: 1,
+  },
+  sortButtonsContainer: {
+    flexDirection: 'column',
+    marginLeft: 10,
+    alignItems: 'center',
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+  },
+  sortButton: {
+    width: 32,
+    height: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 1,
+  },
+  sortTriangleUp: {
+    width: 0,
+    height: 0,
+    borderLeftWidth: 7,
+    borderRightWidth: 7,
+    borderBottomWidth: 9,
+    borderLeftColor: 'transparent',
+    borderRightColor: 'transparent',
+    borderBottomColor: '#FFFFFF',
+  },
+  sortTriangleDown: {
+    width: 0,
+    height: 0,
+    borderLeftWidth: 7,
+    borderRightWidth: 7,
+    borderTopWidth: 9,
+    borderLeftColor: 'transparent',
+    borderRightColor: 'transparent',
+    borderTopColor: '#FFFFFF',
+  },
+  sortTriangleSelected: {
+    borderBottomColor: '#c45f0e',
+    borderTopColor: '#c45f0e',
   },
   radioButton: {
       width: 28,

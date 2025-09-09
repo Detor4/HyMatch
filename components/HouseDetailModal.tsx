@@ -5,8 +5,12 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
+  ScrollView,
+  Dimensions,
 } from 'react-native';
 import { X } from 'lucide-react-native';
+
+const { height: screenHeight } = Dimensions.get('window');
 
 interface HouseDetailModalProps {
   visible: boolean;
@@ -35,68 +39,47 @@ export default function HouseDetailModal({ visible, onClose }: HouseDetailModalP
           </View>
 
           {/* Content */}
-          <View style={styles.content}>
-            <Text style={styles.sectionTitle}>通勤時間について</Text>
+          <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+            <Text style={styles.sectionTitle}>通勤時間</Text>
             <Text style={styles.description}>
-              プロフィールで設定したご自身の自宅もしくは日本語学校から仕事先までの通勤時間の目安です。
+              平均通勤時間：20〜30分{'\n'}
+              最長通勤時間：60分以内{'\n'}
+              最短通勤時間：10分以内
             </Text>
             
-            <Text style={styles.sectionTitle}>通勤時間の計算方法</Text>
+            <Text style={styles.sectionTitle}>交通手段</Text>
             <Text style={styles.description}>
-              • 自宅住所から最寄り駅までの徒歩時間{'\n'}
-              • 電車での移動時間{'\n'}
-              • 職場最寄り駅から職場までの徒歩時間{'\n'}
-              • 乗り換え時間を含む{'\n'}
-              • 待ち時間と遅延の考慮
+              • 電車（JR・私鉄）{'\n'}
+              • バス{'\n'}
+              • 自転車{'\n'}
+              • 徒歩{'\n'}
+              • 車（駐車場あり）
             </Text>
             
-            <Text style={styles.sectionTitle}>通勤オプション</Text>
+            <Text style={styles.sectionTitle}>交通費</Text>
             <Text style={styles.description}>
-              また右側のアイコンは仕事先での通勤時オプションです。{'\n'}
-              • 電車での通勤：最も一般的で効率的{'\n'}
-              • バスでの通勤：電車のない地域で便利{'\n'}
-              • 自転車での通勤：健康に良く、費用が安い{'\n'}
-              • 徒歩での通勤：短距離の場合に最適{'\n'}
-              • 車での通勤：駐車場がある場合
+              • 月額最大¥15,000支給{'\n'}
+              • 実費精算{'\n'}
+              • 定期券購入支援{'\n'}
+              • 自転車通勤の場合も支給
             </Text>
             
-            <Text style={styles.sectionTitle}>通勤時間の目安</Text>
+            <Text style={styles.sectionTitle}>通勤ルート</Text>
             <Text style={styles.description}>
-              • 30分以内：理想的で疲労が少ない{'\n'}
-              • 30〜60分：一般的で多くの人が利用{'\n'}
-              • 60分以上：長距離通勤、早起きが必要{'\n'}
-              • 90分以上：遠距離通勤、体力的に大変{'\n'}
-              • 120分以上：極端に長い通勤時間
+              • 最寄り駅：戸田公園駅{'\n'}
+              • 徒歩10分{'\n'}
+              • バス停：戸田公園駅前{'\n'}
+              • バス5分 + 徒歩3分
             </Text>
             
             <Text style={styles.sectionTitle}>通勤時の注意点</Text>
             <Text style={styles.description}>
-              • ラッシュアワーを避ける（7:30-9:00、17:30-19:00）{'\n'}
-              • 定期券の購入を検討（割引料金）{'\n'}
-              • 通勤経路の確認と複数ルートの把握{'\n'}
-              • 天候による遅延の考慮{'\n'}
-              • 緊急時の代替交通手段の確認{'\n'}
-              • 通勤時間中の学習や読書の活用
+              • ラッシュアワーの考慮{'\n'}
+              • 天候による遅延の可能性{'\n'}
+              • 安全な通勤ルートの選択{'\n'}
+              • 緊急時の連絡方法
             </Text>
-            
-            <Text style={styles.sectionTitle}>通勤費用について</Text>
-            <Text style={styles.description}>
-              • 電車：月額¥10,000〜¥30,000{'\n'}
-              • バス：月額¥5,000〜¥15,000{'\n'}
-              • 自転車：初期費用のみ{'\n'}
-              • 徒歩：費用なし{'\n'}
-              • 交通費は会社から支給される場合があります
-            </Text>
-            
-            <Text style={styles.sectionTitle}>通勤時間の活用</Text>
-            <Text style={styles.description}>
-              • 日本語の学習時間として活用{'\n'}
-              • 仕事の準備や計画を立てる{'\n'}
-              • 読書や音楽鑑賞でリラックス{'\n'}
-              • 同僚とのコミュニケーション{'\n'}
-              • 健康管理のための運動時間
-            </Text>
-          </View>
+          </ScrollView>
         </View>
       </View>
     </Modal>
@@ -109,13 +92,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     justifyContent: 'center',
     alignItems: 'center',
+    paddingHorizontal: 20,
   },
   modalContainer: {
-    width: '85%',
-    maxHeight: '80%',
+    width: '100%',
+    maxHeight: screenHeight * 0.8,
     backgroundColor: '#eceae6',
     borderRadius: 16,
-    padding: 20,
     elevation: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
@@ -126,7 +109,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 20,
+    padding: 20,
     paddingBottom: 15,
     borderBottomWidth: 1,
     borderBottomColor: '#D8A362',
@@ -154,7 +137,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   content: {
-    flex: 1,
+    padding: 20,
+    paddingTop: 0,
   },
   sectionTitle: {
     fontSize: 16,

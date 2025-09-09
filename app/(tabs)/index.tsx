@@ -32,12 +32,22 @@ export default function HomeScreen() {
   const [showFilter, setShowFilter] = useState(false);
 
   const { availableJobs, selectJob, rejectJob, filterJobs } = useJobs();
+  
+  // Debug available jobs
+  React.useEffect(() => {
+    console.log('Available jobs in index:', availableJobs.map(job => ({ 
+      id: job.id, 
+      title: job.title, 
+      salary: job.hourlyWage.max 
+    })));
+  }, [availableJobs]);
   const { t } = useLanguage();
   const router = useRouter();
 
   const handleFilterApply = (filters: any) => {
-    console.log('Applied filters:', filters);
+    console.log('Applied filters to index scene:', filters);
     filterJobs(filters);
+    setShowFilter(false);
   };
 
   const translateX = useSharedValue(0);
@@ -227,10 +237,7 @@ export default function HomeScreen() {
           style={styles.headerButton}
           onPress={() => setShowFilter(true)}
         >
-          <Image 
-            source={require('@/components/filter.png')} 
-            style={styles.headerIcon}
-          />
+          <Filter size={36} color="#000000" />
         </TouchableOpacity>
       </View>
 

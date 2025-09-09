@@ -5,8 +5,12 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
+  ScrollView,
+  Dimensions,
 } from 'react-native';
 import { X } from 'lucide-react-native';
+
+const { height: screenHeight } = Dimensions.get('window');
 
 interface ChatDetailModalProps {
   visible: boolean;
@@ -35,38 +39,46 @@ export default function ChatDetailModal({ visible, onClose }: ChatDetailModalPro
           </View>
 
           {/* Content */}
-          <View style={styles.content}>
-            <Text style={styles.sectionTitle}>この職場で働くために必要な日本語レベル</Text>
-            <Text style={styles.description}>
-              この職場では、基本的な日本語の理解力が必要です。商品の仕分け作業や同僚とのコミュニケーションに必要な日本語レベルについて説明します。
-            </Text>
-            
+          <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
             <Text style={styles.sectionTitle}>必要な日本語レベル</Text>
             <Text style={styles.description}>
-              • N5レベル：基本的な挨拶と簡単な指示の理解{'\n'}
-              • N4レベル：日常的な会話と作業指示の理解{'\n'}
-              • N3レベル：業務に関する詳細な説明の理解{'\n'}
-              • N2レベル：複雑な業務指示と同僚とのコミュニケーション{'\n'}
-              • N1レベル：高度な業務と管理職レベルのコミュニケーション
+              N4〜N3レベル{'\n'}
+              基本的な日常会話ができる方{'\n'}
+              簡単な指示を理解できる方
             </Text>
             
-            <Text style={styles.sectionTitle}>学習のポイント</Text>
+            <Text style={styles.sectionTitle}>業務で使用する日本語</Text>
             <Text style={styles.description}>
-              • 基本的な挨拶表現{'\n'}
-              • 数字と時間の表現{'\n'}
-              • 商品名と作業指示の語彙{'\n'}
-              • 安全に関する指示の理解{'\n'}
-              • 同僚との基本的なコミュニケーション
+              • 挨拶・基本的な会話{'\n'}
+              • 作業指示の理解{'\n'}
+              • 簡単な報告・連絡{'\n'}
+              • 安全に関する指示
             </Text>
             
-            <Text style={styles.sectionTitle}>推奨学習方法</Text>
+            <Text style={styles.sectionTitle}>日本語学習サポート</Text>
             <Text style={styles.description}>
-              • 日本語学習アプリの活用{'\n'}
-              • 職場で使う基本的な表現の練習{'\n'}
-              • 同僚との会話練習{'\n'}
-              • 日本語能力試験の受験準備
+              • 職場での日本語練習機会{'\n'}
+              • 日本語教材の提供{'\n'}
+              • 定期的な日本語レッスン{'\n'}
+              • 日本語能力試験受験支援
             </Text>
-          </View>
+            
+            <Text style={styles.sectionTitle}>コミュニケーション方法</Text>
+            <Text style={styles.description}>
+              • 日本語 + 簡単な英語{'\n'}
+              • 身振り手振りでの説明{'\n'}
+              • 図や写真での説明{'\n'}
+              • 翻訳アプリの使用可
+            </Text>
+            
+            <Text style={styles.sectionTitle}>日本語レベル向上のメリット</Text>
+            <Text style={styles.description}>
+              • 時給アップの可能性{'\n'}
+              • より高度な業務への配属{'\n'}
+              • 管理職への昇進機会{'\n'}
+              • 日本での生活がより快適に
+            </Text>
+          </ScrollView>
         </View>
       </View>
     </Modal>
@@ -79,13 +91,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     justifyContent: 'center',
     alignItems: 'center',
+    paddingHorizontal: 20,
   },
   modalContainer: {
-    width: '85%',
-    maxHeight: '80%',
+    width: '100%',
+    maxHeight: screenHeight * 0.8,
     backgroundColor: '#eceae6',
     borderRadius: 16,
-    padding: 20,
     elevation: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
@@ -96,7 +108,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 20,
+    padding: 20,
     paddingBottom: 15,
     borderBottomWidth: 1,
     borderBottomColor: '#D8A362',
@@ -124,7 +136,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   content: {
-    flex: 1,
+    padding: 20,
+    paddingTop: 0,
   },
   sectionTitle: {
     fontSize: 16,

@@ -5,8 +5,12 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
+  ScrollView,
+  Dimensions,
 } from 'react-native';
 import { X } from 'lucide-react-native';
+
+const { height: screenHeight } = Dimensions.get('window');
 
 interface SuitcaseDetailModalProps {
   visible: boolean;
@@ -35,38 +39,38 @@ export default function SuitcaseDetailModal({ visible, onClose }: SuitcaseDetail
           </View>
 
           {/* Content */}
-          <View style={styles.content}>
+          <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
             <Text style={styles.sectionTitle}>作業内容</Text>
             <Text style={styles.description}>
-              商品の分類作業を行います。入荷した商品を種類別、サイズ別、色別に分類し、適切な棚に配置する作業です。
+              商品の分類・整理作業を行います。入荷した商品をカテゴリ別に分類し、適切な場所に配置する作業です。
             </Text>
             
             <Text style={styles.sectionTitle}>必要なスキル</Text>
             <Text style={styles.description}>
-              • 商品知識と分類能力{'\n'}
-              • 整理整頓のスキル{'\n'}
-              • 効率的な作業能力{'\n'}
-              • 基本的な日本語理解力
+              • 基本的な日本語理解力{'\n'}
+              • 商品知識{'\n'}
+              • 整理整頓能力{'\n'}
+              • 注意力（細かい作業）
             </Text>
             
             <Text style={styles.sectionTitle}>作業時間</Text>
             <Text style={styles.description}>
-              09:00〜18:00（休憩時間含む）{'\n'}
+              08:00〜17:00（休憩時間含む）{'\n'}
               週5日勤務
             </Text>
             
             <Text style={styles.sectionTitle}>給与</Text>
             <Text style={styles.description}>
-              時給：¥1,300〜¥1,600{'\n'}
+              時給：¥1,100〜¥1,400{'\n'}
               交通費支給あり
             </Text>
             
             <Text style={styles.sectionTitle}>勤務地</Text>
             <Text style={styles.description}>
-              戸田公園駅から徒歩10分{'\n'}
-              清潔で安全な作業環境
+              清潔で安全な作業環境{'\n'}
+              空調完備
             </Text>
-          </View>
+          </ScrollView>
         </View>
       </View>
     </Modal>
@@ -79,13 +83,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     justifyContent: 'center',
     alignItems: 'center',
+    paddingHorizontal: 20,
   },
   modalContainer: {
-    width: '85%',
-    maxHeight: '80%',
+    width: '100%',
+    maxHeight: screenHeight * 0.8,
     backgroundColor: '#eceae6',
     borderRadius: 16,
-    padding: 20,
     elevation: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
@@ -96,7 +100,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 20,
+    padding: 20,
     paddingBottom: 15,
     borderBottomWidth: 1,
     borderBottomColor: '#D8A362',
@@ -124,7 +128,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   content: {
-    flex: 1,
+    padding: 20,
+    paddingTop: 0,
   },
   sectionTitle: {
     fontSize: 16,
